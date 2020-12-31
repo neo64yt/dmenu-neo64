@@ -230,7 +230,7 @@ drawmenu(void)
 	if (lines > 0) {
 		/* draw vertical list */
 		for (item = curr; item != next; item = item->right)
-			drawitem(item, 0, y += bh, mw - x);
+			drawitem(item, 0, y += bh, mw);
 	} else if (matches) {
 		/* draw horizontal list */
 		x += inputw;
