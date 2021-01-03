@@ -11,7 +11,7 @@ static int colorprompt = 0;                /* -p  option; if 1, prompt uses Sche
 static const char *fonts[] = {
 	"Fira Code:size=11", 
 	"Material Design Icons:size=13",
-	"JoyPixels:pixelsize=13:antialias=true:autohint=true"
+	"Noto Color Emoji:pixelsize=14"
 };
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 static const char col_bg[]          = "#272a34";
