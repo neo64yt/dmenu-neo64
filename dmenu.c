@@ -8,7 +8,6 @@
 #include <strings.h>
 #include <time.h>
 #include <unistd.h>
-#include <stdbool.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -86,7 +85,7 @@ calcoffsets(void)
 	int i, n;
 
 	if (lines > 0)
-		n = lines * columns * bh;
+		n = lines * bh;
 	else
 		n = mw - (promptw + inputw + TEXTW("<") + TEXTW(">"));
 	/* calculate which items will begin the next page and previous page */
@@ -229,15 +228,9 @@ drawmenu(void)
 
 	recalculatenumbers();
 	if (lines > 0) {
-		/* draw grid */
-		int i = 0;
-		for (item = curr; item != next; item = item->right, i++)
-			drawitem(
-				item,
-				0 + ((i / lines) *  ((mw) / columns)),
-				y + (((i % lines) + 1) * bh),
-				(mw) / columns
-			);
+		/* draw vertical list */
+		for (item = curr; item != next; item = item->right)
+			drawitem(item, 0, y += bh, mw);
 	} else if (matches) {
 		/* draw horizontal list */
 		x += inputw;
@@ -488,9 +481,6 @@ keypress(XKeyEvent *ev)
 	int len;
 	KeySym ksym;
 	Status status;
-	int i;
-	struct item *tmpsel;
-	bool offscreen = false;
 
 	len = XmbLookupString(xic, ev, buf, sizeof buf, &ksym, &status);
 	switch (status) {
@@ -617,24 +607,6 @@ insert:
 		calcoffsets();
 		break;
 	case XK_Left:
-		if (columns > 1) {
-			if (!sel)
-				return;
-			tmpsel = sel;
-			for (i = 0; i < lines; i++) {
-				if (!tmpsel->left ||  tmpsel->left->right != tmpsel)
-					return;
-				if (tmpsel == curr)
-					offscreen = true;
-				tmpsel = tmpsel->left;
-			}
-			sel = tmpsel;
-			if (offscreen) {
-				curr = prev;
-				calcoffsets();
-			}
-			break;
-		}
 		if (cursor > 0 && (!sel || !sel->left || lines > 0)) {
 			cursor = nextrune(-1);
 			break;
@@ -671,24 +643,6 @@ insert:
 			sel->out = 1;
 		break;
 	case XK_Right:
-		if (columns > 1) {
-			if (!sel)
-				return;
-			tmpsel = sel;
-			for (i = 0; i < lines; i++) {
-				if (!tmpsel->right ||  tmpsel->right->left != tmpsel)
-					return;
-				tmpsel = tmpsel->right;
-				if (tmpsel == next)
-					offscreen = true;
-			}
-			sel = tmpsel;
-			if (offscreen) {
-				curr = next;
-				calcoffsets();
-			}
-			break;
-		}
 		if (text[cursor] != '\0') {
 			cursor = nextrune(+1);
 			break;
@@ -721,7 +675,7 @@ buttonpress(XEvent *e)
 {
 	struct item *item;
 	XButtonPressedEvent *ev = &e->xbutton;
-	int x = 0, y = 0, h = bh, w, item_num = 0;
+	int x = 0, y = 0, h = bh, w;
 
 	if (ev->window != win)
 		return;
@@ -776,14 +730,8 @@ buttonpress(XEvent *e)
 		/* vertical list: (ctrl)left-click on item */
 		w = mw - x;
 		for (item = curr; item != next; item = item->right) {
-			if (item_num++ == lines){
-				item_num = 1;
-				x += w / columns;
-				y = 0;
-			}
 			y += h;
-			if (ev->y >= y && ev->y <= (y + h) &&
-			    ev->x >= x && ev->x <= (x + w / columns)) {
+			if (ev->y >= y && ev->y <= (y + h)) {
 				puts(item->text);
 				if (!(ev->state & ControlMask))
 					exit(0);
@@ -1078,13 +1026,9 @@ main(int argc, char *argv[])
 		else if (i + 1 == argc)
 			usage();
 		/* these options take one argument */
-		else if (!strcmp(argv[i], "-g")) {   /* number of columns in grid */
-			columns = atoi(argv[++i]);
-			if (lines == 0) lines = 1;
-		} else if (!strcmp(argv[i], "-l")) { /* number of lines in grid */
+		else if (!strcmp(argv[i], "-l"))   /* number of lines in vertical list */
 			lines = atoi(argv[++i]);
-			if (columns == 0) columns = 1;
-		} else if (!strcmp(argv[i], "-m"))
+		else if (!strcmp(argv[i], "-m"))
 			mon = atoi(argv[++i]);
 		else if (!strcmp(argv[i], "-h")) { /* minimum height of one menu line */
 			lineheight = atoi(argv[++i]);
