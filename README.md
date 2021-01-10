@@ -39,8 +39,9 @@ dmenu is customizable by editing the source code (mainly config.def.h) and patch
 patch < /directory/to/patch/file.diff
 # Change the placeholder with a valid file location
 ```
-If the patch has failed hunks, manually patch by reading the *.rej files in this build directory to guide you.
+If the patch has failed hunks, manually patch by reading the REJ files in this build directory to guide you.
 Make sure you executed cleandir.sh file before recompiling dwm (executing install.sh)
 
 ## Example scripts
-You can find it in my dotfiles repository! (.dmenu directory)
+You can find it in my [dotfiles](https://github.com/neo64yt/dotfiles/) repository! (.dmenu directory)
+
