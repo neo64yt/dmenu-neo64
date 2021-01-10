@@ -16,13 +16,12 @@ static const char *fonts[] = {
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 static const char col_bg[]          = "#272a34";
 static const char col_font[]        = "#ffffff";
-static const char col_sel[]         = "#06a284";
-static const char col_fontsel[]     = "#02231c";
+static const char col_sel[]         = "#12846e";
 static const char col_hl[]          = "#c5e817";
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
 	[SchemeNorm] = { col_font, col_bg },
-	[SchemeSel] = { col_fontsel, col_sel },
+	[SchemeSel] = { col_font, col_sel },
 	[SchemeSelHighlight] = { col_sel, col_hl },
 	[SchemeNormHighlight] = { col_hl, col_sel },
 	[SchemeOut] = { "#000000", "#00ffff" },
