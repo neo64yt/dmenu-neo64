@@ -13,18 +13,19 @@ static const char *fonts[] = {
 	"Material Design Icons:size=13",
 	"Noto Color Emoji:pixelsize=14"
 };
-static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
+static const char *prompt           = NULL;      /* -p  option; prompt to the left of input field */
+/* Color variables */
 static const char col_bg[]          = "#272a34";
 static const char col_font[]        = "#ffffff";
 static const char col_sel[]         = "#12846e";
-static const char col_hl[]          = "#c5e817";
+static const char black[]           = "#000000";
 static const char *colors[SchemeLast][2] = {
-	/*     fg         bg       */
-	[SchemeNorm] = { col_font, col_bg },
-	[SchemeSel] = { col_font, col_sel },
-	[SchemeSelHighlight] = { col_sel, col_hl },
-	[SchemeNormHighlight] = { col_hl, col_sel },
-	[SchemeOut] = { "#000000", "#00ffff" },
+	/*     fg                       bg       */
+	[SchemeNorm]                    = { col_font, col_bg },
+	[SchemeSel]                     = { col_font, col_sel },
+	[SchemeSelHighlight]            = { col_sel, black },
+	[SchemeNormHighlight]           = { black, col_sel },
+	[SchemeOut]                     = { black, "#00ffff" },
 };
 /* -l options; if nonzero, dmenu uses vertical list with given number of lines */
 static unsigned int lines      = 0;
