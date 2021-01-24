@@ -9,7 +9,7 @@ static int min_width = 500;                    /* minimum width when centered */
 static int colorprompt = 0;                /* -p  option; if 1, prompt uses SchemeSel, otherwise SchemeNorm */
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"Fira Code:size=11", 
+	"JetBrains Mono:size=11", 
 	"Material Design Icons:size=13",
 	"Noto Color Emoji:pixelsize=14"
 };
