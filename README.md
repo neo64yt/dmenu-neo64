@@ -43,5 +43,5 @@ If the patch has failed hunks, manually patch by reading the REJ files in this b
 Make sure you executed cleandir.sh file before recompiling dwm (executing install.sh)
 
 ## Example scripts
-You can find it in my [dotfiles](https://github.com/neo64yt/dotfiles/) repository! (.dmenu directory)
+You can find it in my [dotfiles](https://github.com/neo64yt/dotfiles/) repository! (.local/bin/ directory)
 
