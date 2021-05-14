@@ -1,7 +1,7 @@
 # dmenu-neo64
 dmenu is an efficient dynamic menu for X by suckless.org. This is usually used with dwm and standalone window managers. It is very scriptable as it follows the suckless and Unix philosophy. This build is a little bit bloated and follows the color scheme of my dwm build.
 
-### Patches that I use for this build:
+## Patches used in this build:
 * border
 * case 
 * center
@@ -18,6 +18,12 @@ dmenu is an efficient dynamic menu for X by suckless.org. This is usually used w
 * /usr/local/bin/dmenu_path (lists programs in PATH)
 * /usr/local/bin/dmenu_run (shell wrapper to run programs in PATH)
 * /usr/local/bin/stest (filter for a list of files)
+
+## Dependencies
+* libxft-bgra (Displaying emojis)
+* noto-fonts-emoji (Emoji font)
+* ttf-jetbrains-mono (JetBrains Mono font)
+* ttf-material-design-icons-extended (Material Icons font)
 
 ## Installation guide
 
@@ -43,5 +49,5 @@ If the patch has failed hunks, manually patch by reading the REJ files in this b
 Make sure you executed cleandir.sh file before recompiling dwm (executing install.sh)
 
 ## Example scripts
-You can find it in my [dotfiles](https://github.com/neo64yt/dotfiles/) repository! (.local/bin/ directory)
+You can find it in my [dotfiles](https://github.com/neo64yt/dotfiles/) repository! (inside scripts/.local/bin/)
 
