@@ -1,6 +1,9 @@
 # dmenu-neo64
 dmenu is an efficient dynamic menu for X by suckless.org. This is usually used with dwm and standalone window managers. It is very scriptable as it follows the suckless and Unix philosophy. This build is a little bit bloated and follows the color scheme of my dwm build.
 
+## Screenshot
+![screenshot](dmenu.png)
+
 ## Patches used in this build:
 * border
 * case 
