@@ -6,14 +6,15 @@ dmenu is an efficient dynamic menu for X by suckless.org. This is usually used w
 
 ## Patches used in this build:
 * border
-* case 
+* case insensitive 
 * center
+* morecolor
 * fullwidth & vertfull (modified)
 * fuzzyhightlight
 * fuzzymatch
 * instant
 * lineheight
-* mouse
+* mousesupporthoverbgcolor
 * numbers
 
 ## Parts of dmenu

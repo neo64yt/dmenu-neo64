@@ -26,6 +26,7 @@ static const char *colors[SchemeLast][2] = {
 	[SchemeSelHighlight]            = { col_sel, black },
 	[SchemeNormHighlight]           = { col_sel, black },
 	[SchemeOut]                     = { black, "#00ffff" },
+	[SchemeMid] 			= { col_bg, col_font },
 };
 /* -l options; if nonzero, dmenu uses vertical list with given number of lines */
 static unsigned int lines      = 0;

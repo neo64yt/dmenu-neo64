@@ -30,7 +30,7 @@
 
 /* enums */
 enum { SchemeNorm, SchemeSel, SchemeNormHighlight, SchemeSelHighlight,
-       SchemeOut, SchemeLast }; /* color schemes */
+       SchemeOut, SchemeMid, SchemeLast }; /* color schemes */
 
 
 struct item {
@@ -175,6 +175,8 @@ drawitem(struct item *item, int x, int y, int w)
 	int r;
 	if (item == sel)
 		drw_setscheme(drw, scheme[SchemeSel]);
+	else if (item->left == sel || item->right == sel)
+		drw_setscheme(drw, scheme[SchemeMid]);
 	else if (item->out)
 		drw_setscheme(drw, scheme[SchemeOut]);
 	else
@@ -724,8 +726,11 @@ buttonpress(XEvent *e)
 	}
 	if (ev->button != Button1)
 		return;
+	/* disabled below, needs to be fixed */
+	/*
 	if (ev->state & ~ControlMask)
 		return;
+	*/
 	if (lines > 0) {
 		/* vertical list: (ctrl)left-click on item */
 		w = mw - x;
@@ -779,6 +784,40 @@ buttonpress(XEvent *e)
 			calcoffsets();
 			drawmenu();
 			return;
+		}
+	}
+}
+
+static void
+mousemove(XEvent *e)
+{
+	struct item *item;
+	XPointerMovedEvent *ev = &e->xmotion;
+	int x = 0, y = 0, h = bh, w;
+
+	if (lines > 0) {
+		w = mw - x;
+		for (item = curr; item != next; item = item->right) {
+			y += h;
+			if (ev->y >= y && ev->y <= (y + h)) {
+				sel = item;
+				calcoffsets();
+				drawmenu();
+				return;
+			}
+		}
+	} else if (matches) {
+		x += inputw;
+		w = TEXTW("<");
+		for (item = curr; item != next; item = item->right) {
+			x += w;
+			w = MIN(TEXTW(item->text), mw - x - TEXTW(">"));
+			if (ev->x >= x && ev->x <= x + w) {
+				sel = item;
+				calcoffsets();
+				drawmenu();
+				return;
+			}
 		}
 	}
 }
@@ -846,6 +885,9 @@ run(void)
 			exit(1);
 		case ButtonPress:
 			buttonpress(&ev);
+			break;
+		case MotionNotify:
+			mousemove(&ev);
 			break;
 		case Expose:
 			if (ev.xexpose.count == 0)
@@ -960,7 +1002,7 @@ setup(void)
 	swa.override_redirect = True;
 	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask |
-		         ButtonPressMask;
+		         ButtonPressMask | PointerMotionMask;
 	win = XCreateWindow(dpy, parentwin, x, y - (topbar ? 0 : border_width * 2), mw - border_width * 2, mh, border_width,
 	                    CopyFromParent, CopyFromParent, CopyFromParent,
 	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
