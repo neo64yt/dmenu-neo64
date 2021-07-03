@@ -11,7 +11,7 @@ static int colorprompt = 0;                /* -p  option; if 1, prompt uses Sche
 static const char *fonts[] = {
 	"JetBrains Mono:size=11", 
 	"Material Design Icons:size=13",
-	"Noto Color Emoji:pixelsize=14"
+	"JoyPixels:pixelsize=14"
 };
 static const char *prompt           = NULL;      /* -p  option; prompt to the left of input field */
 /* Color variables */
