@@ -55,3 +55,7 @@ Make sure you executed cleandir.sh file before recompiling dwm (executing instal
 ## Example scripts
 You can find it in my [dotfiles](https://github.com/neo64yt/dotfiles/) repository! (inside scripts/.local/bin/)
 
+
+## TODO LIST
+* Implementing icon support ([xmenu](https://github.com/phillbush/xmenu) as reference)
+* Finishing manpage
